@@ -1,7 +1,20 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const MyComponent = () => {
+    const navigate = useNavigate();
+
+    const logout = async () => {
+        try {
+            await axios.delete('http://localhost:5000/logout');
+            navigate('/');
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <nav className="navbar is-light" role="navigation" aria-label="main navigation">
             <div className="container">
@@ -17,16 +30,16 @@ const MyComponent = () => {
                 </div>
                 <div id="navbarBasicExample" className="navbar-menu">
                     <div className="navbar-start">
-                        <a className="navbar-item" href="#">
+                        <Link className="navbar-item" to={'/dashboard'}>
                             Home
-                        </a>
+                        </Link>
                     </div>
                     <div className="navbar-end">
                         <div className="navbar-item">
                             <div className="buttons">
-                                <a className="button is-light" href="#">
+                                <button className="button is-light" onClick={logout}>
                                     Logout
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
